@@ -4,14 +4,13 @@ import matplotlib.pyplot as plt
 import math
 import time
 
+start = time.time()
+
 """
 Given the following function:
-    y = f(w1:w6) = w1x^2 + w2x + w3
-    where (x1,x2,x3,x4,x5,x6)=(4,-2,3.5,5,-11,-4.7) and y=44
-What are the best values for the 6 weights (w1 to w6)? We are going to use the genetic algorithm to optimize this function.
+    y = f(w1:w3) = w1x^2 + w2x + w3
+What are the best values for the 3 weights (w1 to w3)? 
 """
-
-start = time.time()
 
 function_inputs, desired_output = [], []
 # read data from the file
@@ -20,9 +19,8 @@ with open('data_polynomial.txt') as f:
         function_inputs.append(float(line.split()[0]))
         desired_output.append(float(line.split()[1]))
 
+
 def fitness_func(solution, solution_idx):
-    # Calculating the fitness value of each solution in the current population.
-    # The fitness function calulates the sum of products between each input and its corresponding weight.
     output, temp_fitness = 0, 0
     for each in range(len(function_inputs)):
         output = (solution[0] * math.pow(function_inputs[each], 2)) + (solution[1] * function_inputs[each]) + solution[2]
@@ -32,19 +30,14 @@ def fitness_func(solution, solution_idx):
 
 
 fitness_function = fitness_func
-
-num_generations = 200 # Number of generations.
-num_parents_mating = 30 # Number of solutions to be selected as parents in the mating pool.
-parent_selection_type = "tournament"
-
-# To prepare the initial population, there are 2 ways:
-# 1) Prepare it yourself and pass it to the initial_population parameter. This way is useful when the user wants to start the genetic algorithm with a custom initial population.
-# 2) Assign valid integer values to the sol_per_pop and num_genes parameters. If the initial_population parameter exists, then the sol_per_pop and num_genes parameters are useless.
-sol_per_pop = 100 # Number of solutions in the population.
+num_generations = 50
+num_parents_mating = 7
+parent_selection_type = "sss"
+sol_per_pop = 50
 num_genes = 3
-mutation_type = "inversion"
-
 last_fitness = 0
+
+
 def callback_generation(ga_instance):
     global last_fitness
     print("Generation = {generation}".format(generation=ga_instance.generations_completed))
@@ -52,41 +45,31 @@ def callback_generation(ga_instance):
     print("Change     = {change}".format(change=ga_instance.best_solution()[1] - last_fitness))
     last_fitness = ga_instance.best_solution()[1]
 
-# Creating an instance of the GA class inside the ga module. Some parameters are initialized within the constructor.
+
 ga_instance = pygad.GA(num_generations=num_generations,
                        num_parents_mating=num_parents_mating,
                        fitness_func=fitness_function,
                        sol_per_pop=sol_per_pop,
                        num_genes=num_genes,
                        on_generation=callback_generation,
-                       parent_selection_type=parent_selection_type,
-                       mutation_type=mutation_type)
+                       parent_selection_type=parent_selection_type)
 
-# Running the GA to optimize the parameters of the function.
+
 ga_instance.run()
 
-# After the generations complete, some plots are showed that summarize the how the outputs/fitenss values evolve over generations.
-ga_instance.plot_fitness()
 
-# Returning the details of the best solution.
+ga_instance.plot_fitness()
 solution, solution_fitness, solution_idx = ga_instance.best_solution()
 print("Parameters of the best solution : {solution}".format(solution=solution))
 print("Fitness value of the best solution = {solution_fitness}".format(solution_fitness=solution_fitness))
 print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
-prediction = [(solution[0] * math.pow(item, 2)) + (solution[1] * item) + solution[2] for item in function_inputs]
-print("Predicted output based on the best solution : {prediction}".format(prediction=prediction))
-
 if ga_instance.best_solution_generation != -1:
     print("Best fitness value reached after {best_solution_generation} generations.".format(best_solution_generation=ga_instance.best_solution_generation))
 
-# Saving the GA instance.
-filename = 'genetic' # The filename to which the instance is saved. The name is without extension.
+filename = 'genetic'
 ga_instance.save(filename=filename)
-
-# Loading the saved GA instance.
 loaded_ga_instance = pygad.load(filename=filename)
-print(solution)
 
 x = np.linspace(-25, 25, 100)
 fx_1, fx_2 = [], []

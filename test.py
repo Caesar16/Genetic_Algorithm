@@ -10,10 +10,8 @@ import math
 #y5 = 3*math.sin(5*math.pi)
 #print(y1, y2, y3, y4, y5)
 
-
-
-x = np.linspace(-2*math.pi, 2*math.pi, 50)
-with open('data_sinus.txt', 'w') as the_file:
+x = np.linspace(4*math.pi, 4.3*math.pi, 30)
+with open('data_sinus.txt', 'a') as the_file:
     for item in x:
         y = 3 * (math.sin(5 * item))
         the_file.write(f"{item}\t{y}\n")

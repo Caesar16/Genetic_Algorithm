@@ -7,7 +7,7 @@ import time
 Given the following function:
     y = f(w1:w6) = w1x1 + w2x2 + w3x3 + w4x4 + w5x5 + 6wx6
     where (x1,x2,x3,x4,x5,x6)=(4,-2,3.5,5,-11,-4.7) and y=44
-What are the best values for the 6 weights (w1 to w6)? 
+What are the best values for the 6 weights (w1 to w6)? We are going to use the genetic algorithm to optimize this function.
 """
 
 start = time.time()
@@ -24,7 +24,7 @@ def fitness_func(solution, solution_idx):
 
 fitness_function = fitness_func
 
-num_generations = 100 # Number of generations.
+num_generations = 50 # Number of generations.
 num_parents_mating = 7 # Number of solutions to be selected as parents in the mating pool.
 
 # To prepare the initial population, there are 2 ways:
@@ -47,7 +47,10 @@ ga_instance = pygad.GA(num_generations=num_generations,
                        fitness_func=fitness_function,
                        sol_per_pop=sol_per_pop,
                        num_genes=num_genes,
-                       on_generation=callback_generation)
+                       on_generation=callback_generation,
+                       init_range_low=-2,
+                       init_range_high=5,
+                       mutation_percent_genes=1)
 
 # Running the GA to optimize the parameters of the function.
 ga_instance.run()
@@ -73,19 +76,5 @@ ga_instance.save(filename=filename)
 
 # Loading the saved GA instance.
 loaded_ga_instance = pygad.load(filename=filename)
-loaded_ga_instance.plot_fitness()
+loaded_ga_instance.plot_fitness(xlabel="Generacje")
 
-x = numpy.linspace(-25, 25, 100)
-fx = []
-arr = 0
-for i in x:
-    for n in solution:
-        arr += n*i
-    fx.append(arr)
-    arr = 0
-plt.plot(x, fx)
-plt.grid()
-plt.show()
-
-end = time.time()
-print(end - start)
