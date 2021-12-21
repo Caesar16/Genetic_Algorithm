@@ -65,7 +65,8 @@ print("Fitness value of the best solution = {solution_fitness}".format(solution_
 print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 if ga_instance.best_solution_generation != -1:
-    print("Best fitness value reached after {best_solution_generation} generations.".format(best_solution_generation=ga_instance.best_solution_generation))
+    print("Best fitness value reached after {best_solution_generation} generations." \
+    .format(best_solution_generation=ga_instance.best_solution_generation))
 
 filename = 'genetic'
 ga_instance.save(filename=filename)
