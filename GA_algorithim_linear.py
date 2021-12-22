@@ -73,7 +73,7 @@ ga_instance.save(filename=filename)
 
 # Loading the saved GA instance.
 loaded_ga_instance = pygad.load(filename=filename)
-loaded_ga_instance.plot_fitness()
+loaded_ga_instance.plot_fitness(xlabel="Generacje")
 
 x = numpy.linspace(-25, 25, 100)
 fx = []
