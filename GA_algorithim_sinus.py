@@ -21,8 +21,6 @@ with open('data_sinus.txt') as f:
 
 
 def fitness_func(solution, solution_idx):
-    # Calculating the fitness value of each solution in the current population.
-    # The fitness function calulates the sum of products between each input and its corresponding weight.
     output, temp_fitness = 0, 0
     for each in range(len(function_inputs)):
         output = solution[0]*(math.sin(solution[1] * function_inputs[each]))
@@ -85,3 +83,13 @@ plt.show()
 
 end = time.time()
 print(end - start)
+
+
+def fitness_func(solution, solution_idx):
+    output, temp_fitness = 0, 0
+    for each in range(len(function_inputs)):
+        output = solution[0]*(math.sin(solution[1] * function_inputs[each]))
+        temp_fitness += 1.0 / np.abs(output - desired_output[each])
+    fitness = temp_fitness / 6
+    return fitness
+
