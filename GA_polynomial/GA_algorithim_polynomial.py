@@ -88,9 +88,20 @@ fx_1, fx_2 = [], []
 for i in x:
     fx_1.append((4 * math.pow(i, 2)) + (-5 * i) + 3)
     fx_2.append((solution[0] * math.pow(i, 2)) + (solution[1] * i) + solution[2])
+
 fig, ax1 = plt.subplots(sharex=True)
 fig.suptitle('Wykres funkcji zadanej do obliczonej')
 ax1.plot(x, fx_1, x, fx_2)
 plt.show()
 
 print("Program runtime: {:.2f} s".format(end - start))
+
+fig, (ax1, ax2) = plt.subplots(2, sharex=True)
+fig.suptitle('Wykres funkcji zadanej do obliczonej')
+ax1.plot(x, fx_1)
+ax2.plot(x, fx_2)
+plt.show()
+
+end = time.time()
+print(end - start)
+
