@@ -32,6 +32,7 @@ ax2.plot(x, fx_1, x, fx_2)
 plt.show()
 
 
+<<<<<<< HEAD
 
 
 
@@ -43,3 +44,5 @@ plt.show()
 
 
 
+=======
+>>>>>>> 88b6d222ee01adff0fd33b2373d1abc2ed1e0027
