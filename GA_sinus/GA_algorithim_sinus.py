@@ -47,6 +47,7 @@ def callback_generation(ga_instance):
     print("Change     = {change}".format(change=ga_instance.best_solution()[1] - last_fitness))
     last_fitness = ga_instance.best_solution()[1]
 
+
 ga_instance = pygad.GA(num_generations=num_generations,
                        num_parents_mating=num_parents_mating,
                        fitness_func=fitness_function,
@@ -95,6 +96,7 @@ for i in range(len(x)):
 fig, ax1 = plt.subplots(sharex=True)
 fig.suptitle('Wykres funkcji zadanej do obliczonej')
 ax1.plot(x, fx_1, x, fx_2)
+print(ax1.plot(x, fx_1, x, fx_2))
 plt.show()
 
 print("Program runtime: {:.2f} s".format(end - start))
@@ -107,3 +109,6 @@ plt.show()
 
 end = time.time()
 print(end - start)
+
+plt.plot(function_inputs, desired_output)
+plt.show()
