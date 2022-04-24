@@ -1,4 +1,4 @@
-import pygad
+mport pygad
 import numpy as np
 import matplotlib.pyplot as plt
 import math
