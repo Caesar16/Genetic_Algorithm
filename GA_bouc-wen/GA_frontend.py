@@ -6,17 +6,6 @@ import pandas as pd
 import itertools
 import GA_backend
 
-'''
-     Create a secure login for your scripts without having to include your password in the program. Create an SHA1 hash 
-     code for your password using the GUI. Paste into variable in final program
-     1. Choose a password
-     2. Generate a hash code for your chosen password by running program and entering 'gui' as the password
-     3. Type password into the GUI
-     4. Copy and paste hash code Window GUI into variable named login_password_hash
-     5. Run program again and test your login!
-'''
-
-
 # Use this GUI to get your password's hash code
 def HashGeneratorGUI():
     layout = [[sg.T('Password Hash Generator', size=(30, 1), font='Any 15')],
@@ -43,8 +32,6 @@ def HashGeneratorGUI():
             pass
 
 
-# ----------------------------- Paste this code into your program / script -----------------------------
-# determine if a password matches the secret password by comparing SHA1 hash codes
 def PasswordMatches(password, hash):
     password_utf = password.encode('utf-8')
     sha1hash = hashlib.sha1()
@@ -80,24 +67,17 @@ def run():
 
 
 def custom_meter():
-    # layout the form
     layout = [[sg.Text('Initializing')],
               [sg.ProgressBar(300, orientation='h',
                               size=(20, 20), key='progress')],
               [sg.Cancel()]]
-
-    # create the form`
     window = sg.Window('Custom Progress Meter', layout)
     progress_bar = window['progress']
-    # loop that would normally do something useful
     for i in range(300):
-        # check to see if the cancel button was clicked and exit loop if clicked
         event, values = window.read(timeout=0, timeout_key='timeout')
         if event == 'Cancel' or event is None:
             break
-        # update bar with loop value +1 so that bar eventually reaches the maximum
         progress_bar.update_bar(i + 1)
-    # done with loop... need to destroy the window as it's still open
     window.CloseNonBlocking()
 
 
@@ -178,7 +158,6 @@ def make_window(theme):
         [sg.Column(
             layout=[
                 [sg.Canvas(key='fig_cv_1',
-                           # it's important that you set this size
                            size=(600 * 2, 600)
                            )]
             ],
@@ -196,7 +175,6 @@ def make_window(theme):
         [sg.Column(
             layout=[
                 [sg.Canvas(key='fig_cv_2',
-                           # it's important that you set this size
                            size=(600 * 2, 600)
                            )]
             ],
@@ -235,13 +213,18 @@ def make_window(theme):
     return window
 
 
+def draw(figure, fig_cv, controls_cv, window):
+    fig = figure
+    plt.figure(2)
+    DPI = fig.get_dpi()
+    fig.set_size_inches(600 * 2 / float(DPI), 600 / float(DPI))
+    draw_figure_w_toolbar(window[fig_cv].TKCanvas, fig, window[controls_cv].TKCanvas)
+
 def main():
     window = make_window(sg.theme())
     desired_output, function_inputs = [], []
-    # This is an Event Loop
     while True:
         event, values = window.read(timeout=100)
-        # keep an animation running so show things are happening
         if event not in (sg.TIMEOUT_EVENT, sg.WIN_CLOSED):
             print('============ Event = ', event, ' ==============')
         if event in (None, 'Exit', 'Exit1', 'Exit2', 'Exit3'):
@@ -303,24 +286,10 @@ def main():
                                                    values[3], values[4], "%s" % values[5], "%s" % values[6],
                                                    "%s" % values[7], values[8], values[9], values[10],
                                                    values[11], values[12], "%s" % values[13])
-                # ------------------------------- PASTE YOUR MATPLOTLIB CODE HERE
-                fig = GA[0]
-                plt.figure(2)
-                DPI = fig.get_dpi()
-                # ------------------------------- you have to play with this size to reduce the movement error when the mouse hovers over the figure, it's close to canvas size
-                fig.set_size_inches(600 * 2 / float(DPI), 600 / float(DPI))
-                # ------------------------------- Instead of plt.show()
-                draw_figure_w_toolbar(window['fig_cv_1'].TKCanvas, fig, window['controls_cv_1'].TKCanvas)
-                print("[LOG] Draw a plot_1!")
 
-                fig_2 = GA[1]
-                plt.figure(2)
-                DPI = fig_2.get_dpi()
-                # ------------------------------- you have to play with this size to reduce the movement error when the mouse hovers over the figure, it's close to canvas size
-                fig_2.set_size_inches(600 * 2 / float(DPI), 600 / float(DPI))
-                # ------------------------------- Instead of plt.show()
-                draw_figure_w_toolbar(window['fig_cv_2'].TKCanvas, fig_2, window['controls_cv_2'].TKCanvas)
-                print("[LOG] Draw a plot_2!")
+                draw(GA[0], 'fig_cv_1', 'controls_cv_1', window)
+                draw(GA[1], 'fig_cv_2', 'controls_cv_2', window)
+
     window.close()
     exit(0)
 
