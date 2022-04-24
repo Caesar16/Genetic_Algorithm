@@ -1,16 +1,20 @@
-import numpy as np
-import math
+def test():
+    return 'abc', 100
+
+word = 50
+print('"%s"' % word)
 
 
-y1 = 3*math.sin(5*math.pi/8)
-y2 = 3*math.sin(5*math.pi/6)
-y3 = 3*math.sin(5*math.pi/5)
-y4 = 3*math.sin(5*math.pi/3)
-y5 = 3*math.sin(5*math.pi)
-print(y1, y2, y3, y4, y5)
+fig = GA[0]
+                plt.figure(2)
+                DPI = fig.get_dpi()
+                fig.set_size_inches(600 * 2 / float(DPI), 600 / float(DPI))
+                draw_figure_w_toolbar(window['fig_cv_1'].TKCanvas, fig, window['controls_cv_1'].TKCanvas)
+                print("[LOG] Draw a plot_1!")
 
-x = np.linspace(4*math.pi, 4.3*math.pi, 30)
-with open('data_inputs.txt', 'a') as the_file:
-    for item in x:
-        y = 3 * (math.sin(5 * item))
-        the_file.write(f"{item}\t{y}\n")
+fig_2 = GA[1]
+                plt.figure(2)
+                DPI = fig_2.get_dpi()
+                fig_2.set_size_inches(600 * 2 / float(DPI), 600 / float(DPI))
+                draw_figure_w_toolbar(window['fig_cv_2'].TKCanvas, fig_2, window['controls_cv_2'].TKCanvas)
+                print("[LOG] Draw a plot_2!")
