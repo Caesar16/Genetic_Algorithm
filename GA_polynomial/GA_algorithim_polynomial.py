@@ -33,7 +33,7 @@ def fitness_func(solution, solution_idx):
 fitness_function = fitness_func
 num_generations = 150
 num_parents_mating = 7
-parent_selection_type = "sss"
+parent_selection_type = "tournament"
 sol_per_pop = 75
 num_genes = 3
 last_fitness = 0
@@ -69,7 +69,9 @@ if ga_instance.best_solution_generation != -1:
     print("Best fitness value reached after {best_solution_generation} generations." \
           .format(best_solution_generation=ga_instance.best_solution_generation))
 
-
+filename = 'genetic'
+ga_instance.save(filename=filename)
+loaded_ga_instance = pygad.load(filename=filename)
 
 desired_output_prc, output_for_prc, prc = 0, 0, 0
 for each in range(len(function_inputs)):

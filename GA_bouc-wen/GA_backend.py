@@ -18,6 +18,7 @@ def GeneticOptimization(function_inputs_DISPLACEMENTS, desired_output_FORCE, sol
     def draw_chart(function_inputs, desired_output, count_output):
         prc = 0
         for each in range(len(function_inputs)):
+            count_output[each] = count_output[each]
             if float(count_output[each]) > float(desired_output[each]):
                 prc = 100 - ((float(desired_output[each]) / float(count_output[each])) * 100)
             else:
@@ -36,7 +37,7 @@ def GeneticOptimization(function_inputs_DISPLACEMENTS, desired_output_FORCE, sol
         # Bouc Wen differential equation calculation
         z = 1.0
         v = 0.0
-        delta_t = 1
+        delta_t = 0.05
         ast = round(solution[0], 3)
         ac = round(solution[7], 3)
         ns = round(solution[1], 3)
@@ -81,19 +82,19 @@ def GeneticOptimization(function_inputs_DISPLACEMENTS, desired_output_FORCE, sol
     num_genes = 14
     last_fitness = 0
     gene_space = [{"low": 0.001, "high": 0.025, "step": 0.001},
-                  {"low": 0.43, "high": 10.75, "step": 0.001},
-                  {"low": 0.07, "high": 1.75, "step": 0.001},
-                  {"low": 0.1, "high": 2.5, "step": 0.001},
-                  {"low": 0.3, "high": 7.5, "step": 0.001},
-                  {"low": 20, "high": 500, "step": 0.001},
-                  {"low": 0.3, "high": 7.5, "step": 0.001},
-                  {"low": 0.05, "high": 1.25, "step": 0.001},
-                  {"low": 0.2, "high": 5, "step": 0.001},
-                  {"low": 0.0055, "high": 0.1375, "step": 0.001},
+                  {"low": 0.43, "high": 10.75, "step": 0.1},
+                  {"low": 0.07, "high": 1.75, "step": 0.1},
+                  {"low": 0.1, "high": 2.5, "step": 0.1},
+                  {"low": 0.3, "high": 7.5, "step": 0.1},
+                  {"low": 20, "high": 500, "step": 0.1},
+                  {"low": 0.3, "high": 7.5, "step": 0.1},
+                  {"low": 0.05, "high": 1.25, "step": 0.1},
+                  {"low": 0.2, "high": 5, "step": 0.1},
+                  {"low": 0.0055, "high": 0.1375, "step": 0.01},
                   {"low": 0.001, "high": 0.025, "step": 0.001},
-                  {"low": 0.2, "high": 5, "step": 0.001},
-                  {"low": -575, "high": -23, "step": 0.001},
-                  {"low": 1.8, "high": 45, "step": 0.001}]
+                  {"low": 0.2, "high": 5, "step": 0.1},
+                  {"low": -575, "high": -23, "step": 0.1},
+                  {"low": 1.8, "high": 45, "step": 0.1}]
 
     def callback_generation(ga_instance):
         global last_fitness
@@ -102,7 +103,7 @@ def GeneticOptimization(function_inputs_DISPLACEMENTS, desired_output_FORCE, sol
         print("Change     = {change}".format(change=ga_instance.best_solution()[1] - last_fitness))
         last_fitness = ga_instance.best_solution()[1]
 
-    ga_instance = pygad.GA(num_generations=num_generations,
+    ga_instance = pygad.GA(num_generations=int(num_generations),
                            num_parents_mating=int(num_parents_mating),
                            fitness_func=fitness_function,
                            gene_type=float,

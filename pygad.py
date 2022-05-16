@@ -3196,7 +3196,7 @@ class GA:
         if not save_dir is None:
             matplotlib.pyplot.savefig(fname=save_dir, 
                                       bbox_inches='tight')
-        matplotlib.pyplot.show()
+        #matplotlib.pyplot.show()
 
         return fig
 
@@ -3263,7 +3263,7 @@ class GA:
         if not save_dir is None:
             matplotlib.pyplot.savefig(fname=save_dir, 
                                       bbox_inches='tight')
-        #matplotlib.pyplot.show()
+        matplotlib.pyplot.show()
 
         return fig
 
