@@ -1,0 +1,8 @@
+matplotlib
+pygad
+numpy
+math
+time
+PySimpleGUI
+hashlib
+itertools
