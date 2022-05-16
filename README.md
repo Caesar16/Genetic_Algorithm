@@ -3,7 +3,7 @@ The purpose ofthis project is to verify the ability of a genetic algorithm libra
 In the future I want expoand app capabilities to compute more complex equations like Bouc-Wen model, which is second order nonlinear partial differential equations.
 
 # Instruction 
-TO run the program you have to install all components from the requirements file and after that run app_frontend script. 
+For run the program you have to install all components from the requirements.txt file and after that run app_frontend.py script.
 
 
 https://github.com/ahmedfgad/GeneticAlgorithmPython
